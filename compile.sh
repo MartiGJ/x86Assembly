@@ -16,8 +16,19 @@ function finish {
 }
 trap finish EXIT
 
-echo '[+] Assembling with Nasm...'
-nasm -f elf32 -o $1.o $1.asm
+if [ "$1" = "clean" ]; then
+    echo '[+] Removing files...'
+    rm -f elf32_*
+    rm -f */*.o
+else
+    echo '[+] Assembling with Nasm...'
+    nasm -f elf32 -o $1/$1.o $1/$1.asm
 
-echo '[+] Linking ...'
-ld -m elf_i386 -o $1 $1.o
+    if [ "$2" = "gcc" ]; then
+        echo '[+] Linking with GCC...'
+        gcc -m32 -o elf32_$1 $1/$1.o
+    else
+        echo '[+] Linking with LD...'
+        ld -m elf_i386 -o elf32_$1 $1/$1.o
+    fi
+fi
