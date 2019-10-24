@@ -1,5 +1,3 @@
-; Author: Martí Guasch Jiménez
-
 ; Original shellcode (Linux/x86 - Tiny Execve sh Shellcode - 21 bytes by Geyslan G. Bem): http://shell-storm.org/shellcode/files/shellcode-841.php
 ;  0:    31 c9                    xor    ecx, ecx
 ;  2:    f7 e1                    mul    ecx
